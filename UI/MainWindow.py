@@ -14,39 +14,10 @@ app.exec_()
 '''
 
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
-from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush
+from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap
 from PyQt5.QtCore import Qt, QPoint
 import sys
-
-class WbWidget(PyQt5.QtWidgets.QWidget):
-    def __init__(self,parent=None):
-        PyQt5.QtWidgets.QWidget.__init__(self, parent=parent)
-        self.image = QImage(self.size(), QImage.Format_RGB32)
-        self.image.fill(Qt.white)
-        self.drawing = False
-        self.brushSize = 9
-        self.brushColor = Qt.black
-        self.lastPoint = QPoint()
-        
-    def mousePressEvent(self, event):
-        if event.button() == Qt.LeftButton:
-            self.drawing = True
-            self.lastPoint = event.pos()
-            # print(self.lastPoint)
-
-    def mouseMoveEvent(self, event):
-        if(event.buttons() & Qt.LeftButton) & self.drawing:
-            painter = QPainter(self.image)
-            painter.setPen(QPen(self.brushColor, self.brushSize,
-                                Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
-            painter.drawLine(self.lastPoint, event.pos())
-            self.lastPoint = event.pos()
-            self.update()
-
-    def mouseReleaseEvent(self, event):
-
-        if event.button() == Qt.LeftButton:
-            self.drawing = False
+from Whiteboard import Whiteboard
 
 class Window(QMainWindow):
     def __init__(self):
@@ -65,10 +36,11 @@ class Window(QMainWindow):
         self.setWindowIcon(QIcon(icon))
 
         self.mainLayout = QVBoxLayout()
-        self.whiteboard = WbWidget(self)
-        self.whiteboard.resize(200,200)
+        self.whiteboard = Whiteboard()
+        self.whiteboard.initalize()
+        self.whiteboard.setMouseTracking(True)
+        self.whiteboard.setFocusPolicy(Qt.StrongFocus)
         self.setCentralWidget(self.whiteboard)
-        self.mousePressEvent
 
         mainMenu = self.menuBar()
         fileMenu = mainMenu.addMenu("File")
@@ -87,15 +59,14 @@ class Window(QMainWindow):
 
     def save(self):  # save file function
         filePath, _ = QFileDialog.getSaveFileName(
-            self, "Save Image", "", "PNG(*.png);;JPEG(*.jpg *.jpeg);;All Files(*.*) ")
+            self, "Save Image", "", "PNG Image file (*.png)")
 
-        if filePath == "":
-            return
-        self.image.save(filePath)
+        if filePath:
+            pixmap = self.whiteboard.pixmap()
+            pixmap.save(filePath, "PNG" )
 
     def clear(self):  # clear screen function
-        self.image.fill(Qt.white)
-        self.update()
+        self.whiteboard.reset()
 
 
 if __name__ == "__main__":
