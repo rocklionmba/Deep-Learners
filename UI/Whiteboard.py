@@ -1,7 +1,7 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QPixmap, QColor
 from PyQt5.QtCore import Qt, QPoint
-CANVAS_DIMENSIONS = 1920, 1080
+CANVAS_DIMENSIONS = 1050,580
 class Whiteboard(QtWidgets.QLabel):
 
     def initalize(self):

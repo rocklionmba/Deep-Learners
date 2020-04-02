@@ -12,7 +12,7 @@ form.setupUi(window)
 window.show()
 app.exec_()
 '''
-
+from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap
 from PyQt5.QtCore import Qt, QPoint
@@ -23,18 +23,35 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        title = "Paint Application"
-        top = 0
-        left = 75
-        width = 1920
-        height = 1080
+        #title = "Paint Application"
+        #top = 0
+        #left = 75
+        #width = 1920
+        #height = 1080
 
-        icon = "icons/pain.png"
+        #icon = "icons/pain.png"
 
-        self.setWindowTitle(title)
-        self.setGeometry(top, left, width, height)
-        self.setWindowIcon(QIcon(icon))
+        ui = uic.loadUi("UI/MainWindow.ui",self)
 
+        self.whiteboard_button = self.findChild(QtWidgets.QPushButton, 'whiteboard_button')
+        self.mainStackedWidget = self.findChild(QtWidgets.QStackedWidget, 'mainStackedWidget')
+        self.backButton = self.findChild(QtWidgets.QPushButton, 'backButton')
+        self.mainWhiteboard = self.findChild(Whiteboard, 'mainWhiteboard')
+        
+        self.mainWhiteboard.initalize()
+        self.mainWhiteboard.setMouseTracking(True)
+        self.mainWhiteboard.setFocusPolicy(Qt.StrongFocus)
+        
+        if (type(self.mainStackedWidget) == "NoneType"): print("none")
+
+        self.whiteboard_button.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(1))
+        self.backButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
+
+
+        #self.setWindowTitle(title)
+        #self.setGeometry(top, left, width, height)
+        #self.setWindowIcon(QIcon(icon))
+        '''
         self.mainLayout = QVBoxLayout()
         self.whiteboard = Whiteboard()
         self.whiteboard.initalize()
@@ -67,7 +84,7 @@ class Window(QMainWindow):
 
     def clear(self):  # clear screen function
         self.whiteboard.reset()
-
+'''
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)

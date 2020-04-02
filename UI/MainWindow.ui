@@ -11,10 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Whiteboard Project</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QStackedWidget" name="stackedWidget">
+   <widget class="QStackedWidget" name="mainStackedWidget">
     <property name="geometry">
      <rect>
       <x>0</x>
@@ -24,7 +24,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="home_page">
      <widget class="QGraphicsView" name="graphicsView">
@@ -78,16 +78,6 @@
      </widget>
     </widget>
     <widget class="QWidget" name="whiteboard">
-     <widget class="QWidget" name="main_whiteboard" native="true">
-      <property name="geometry">
-       <rect>
-        <x>10</x>
-        <y>50</y>
-        <width>1051</width>
-        <height>591</height>
-       </rect>
-      </property>
-     </widget>
      <widget class="QPushButton" name="pushButton_3">
       <property name="geometry">
        <rect>
@@ -140,7 +130,7 @@
        <string>PushButton</string>
       </property>
      </widget>
-     <widget class="QPushButton" name="pushButton_10">
+     <widget class="QPushButton" name="backButton">
       <property name="geometry">
        <rect>
         <x>10</x>
@@ -150,7 +140,7 @@
        </rect>
       </property>
       <property name="text">
-       <string>PushButton</string>
+       <string>Go back</string>
       </property>
      </widget>
      <widget class="QWidget" name="horizontalLayoutWidget_2">
@@ -211,6 +201,19 @@
         </widget>
        </item>
       </layout>
+     </widget>
+     <widget class="Whiteboard" name="mainWhiteboard">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>50</y>
+        <width>1050</width>
+        <height>580</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
      </widget>
     </widget>
    </widget>
@@ -281,23 +284,13 @@
    </property>
   </action>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>Whiteboard</class>
+   <extends>QLabel</extends>
+   <header>Whiteboard</header>
+  </customwidget>
+ </customwidgets>
  <resources/>
- <connections>
-  <connection>
-   <sender>whiteboard_button</sender>
-   <signal>clicked()</signal>
-   <receiver>stackedWidget</receiver>
-   <slot>update()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>398</x>
-     <y>430</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>535</x>
-     <y>341</y>
-    </hint>
-   </hints>
-  </connection>
- </connections>
+ <connections/>
 </ui>
