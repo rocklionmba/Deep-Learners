@@ -30,61 +30,78 @@ class Window(QMainWindow):
         #height = 1080
 
         #icon = "icons/pain.png"
+        self.filePath = ""
+        self.setWindowTitle("Whiteboard Application")
 
         ui = uic.loadUi("UI/MainWindow.ui",self)
-
-        self.whiteboard_button = self.findChild(QtWidgets.QPushButton, 'whiteboard_button')
+        
+        #All findChild should go here
+        self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
         self.mainStackedWidget = self.findChild(QtWidgets.QStackedWidget, 'mainStackedWidget')
         self.backButton = self.findChild(QtWidgets.QPushButton, 'backButton')
+        self.clearButton = self.findChild(QtWidgets.QPushButton, 'clearButton')
         self.mainWhiteboard = self.findChild(Whiteboard, 'mainWhiteboard')
-        
+        self.newWhiteboard = self.findChild(QtWidgets.QAction, 'actionWhiteboard')
+        self.saveWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave')
+        self.saveAsWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave_As')
+        self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
+        self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
+        #End findChild
+
+
         self.mainWhiteboard.initalize()
         self.mainWhiteboard.setMouseTracking(True)
         self.mainWhiteboard.setFocusPolicy(Qt.StrongFocus)
         
         if (type(self.mainStackedWidget) == "NoneType"): print("none")
 
-        self.whiteboard_button.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(1))
+        self.whiteboardMainButton.clicked.connect(lambda: self.setNewWhiteboard())
         self.backButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
+        self.clearButton.clicked.connect(lambda: self.clear())
+        self.newWhiteboard.triggered.connect(lambda: self.setNewWhiteboard())
+        self.openWhiteboard.triggered.connect(lambda: self.openExistingWhiteboard())
+        self.saveWhiteboard.triggered.connect(lambda: self.save())
+        self.saveAsWhiteboard.triggered.connect(lambda: self.saveAs())
+        self.closeWhiteboard.triggered.connect(lambda: self.setCloseWhiteboard())
 
+    def setNewWhiteboard(self):
+        self.mainStackedWidget.setCurrentIndex(1)
+        self.setWindowTitle("Whiteboard Application - New Project")
+        self.mainWhiteboard.reset()
 
-        #self.setWindowTitle(title)
-        #self.setGeometry(top, left, width, height)
-        #self.setWindowIcon(QIcon(icon))
-        '''
-        self.mainLayout = QVBoxLayout()
-        self.whiteboard = Whiteboard()
-        self.whiteboard.initalize()
-        self.whiteboard.setMouseTracking(True)
-        self.whiteboard.setFocusPolicy(Qt.StrongFocus)
-        self.setCentralWidget(self.whiteboard)
+    def openExistingWhiteboard(self):
+        self.filePath, _ = QFileDialog.getOpenFileName(self, "Open Whiteboard", "", "Whiteboard file (*.wtbd)")
 
-        mainMenu = self.menuBar()
-        fileMenu = mainMenu.addMenu("File")
-
-        saveAction = QAction(QIcon("icons/save.png"), "Save As", self)
-        saveAction.setShortcut("Ctrl+S")
-        fileMenu.addAction(saveAction)
-        saveAction.triggered.connect(self.save)
-
-        clearAction = QAction(QIcon("icons/clear.png"), "Clear", self)
-        clearAction.setShortcut("Ctrl+C")
-        fileMenu.addAction(clearAction)
-        clearAction.triggered.connect(self.clear)
-
-    
+        pixmap = QPixmap()
+        pixmap.load(self.filePath)
+        self.setNewWhiteboard()
+        self.setWindowTitle("Whiteboard Application - " + self.filePath)
+        self.mainWhiteboard.setPixmap(pixmap)
 
     def save(self):  # save file function
-        filePath, _ = QFileDialog.getSaveFileName(
-            self, "Save Image", "", "PNG Image file (*.png)")
+        if (self.filePath == ""):
+            self.filePath, _ = QFileDialog.getSaveFileName(self, "Save Whiteboard", "", "Whiteboard file (*.wtbd)")
 
-        if filePath:
-            pixmap = self.whiteboard.pixmap()
-            pixmap.save(filePath, "PNG" )
+        pixmap = self.mainWhiteboard.pixmap()
+        self.setWindowTitle("Whiteboard Application - " + self.filePath)
+        pixmap.save(self.filePath, "PNG" )
+
+    def saveAs(self):  # save file function
+        self.filePath, _ = QFileDialog.getSaveFileName(self, "Save Whiteboard", "", "Whiteboard file (*.wtbd)")
+
+        pixmap = self.mainWhiteboard.pixmap()
+        self.setWindowTitle("Whiteboard Application - " + self.filePath)
+        pixmap.save(self.filePath, "PNG" )
 
     def clear(self):  # clear screen function
-        self.whiteboard.reset()
-'''
+        self.mainWhiteboard.reset()
+
+    def setCloseWhiteboard(self):
+        self.mainWhiteboard.reset()
+        self.filePath = ""
+        self.setWindowTitle("Whiteboard Application")
+        self.mainStackedWidget.setCurrentIndex(0)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
