@@ -11,7 +11,6 @@ class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-
         #title = "Paint Application"
         #top = 0
         #left = 75
@@ -22,7 +21,7 @@ class Window(QMainWindow):
         self.filePath = ""
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("MainWindow.ui", self)
 
         # All findChild should go here
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
@@ -38,6 +37,7 @@ class Window(QMainWindow):
         self.saveAsWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave_As')
         self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
         self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
+        self.clearAnswer = self.findChild(QtWidgets.QPushButton, 'clearAnswer')
         #self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
         # End findChild
 
@@ -62,6 +62,7 @@ class Window(QMainWindow):
         self.backButton_3.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
         self.clearButton.clicked.connect(lambda: self.clear())
         self.clearButton_3.clicked.connect(lambda: self.clear())
+        self.clearAnswer.clicked.connect(lambda: self.clearAnswerBoard())
         self.newWhiteboard.triggered.connect(lambda: self.setNewWhiteboard())
         self.openWhiteboard.triggered.connect(lambda: self.openExistingWhiteboard())
         self.saveWhiteboard.triggered.connect(lambda: self.save())
@@ -72,6 +73,7 @@ class Window(QMainWindow):
         self.greenButton.clicked.connect(lambda: self.mainWhiteboard.greenColor())
         self.blackButton.clicked.connect(lambda: self.mainWhiteboard.blackColor())
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
+
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
         self.setWindowTitle("Whiteboard Application - New Project")
@@ -107,6 +109,9 @@ class Window(QMainWindow):
     def clear(self):  # clear screen function
         self.mainWhiteboard.reset()
         self.scratchPaperWhiteboard.reset()
+        self.answerBoxWhiteboard.reset()
+
+    def clearAnswerBoard(self):  # clear answer function
         self.answerBoxWhiteboard.reset()
 
     def setCloseWhiteboard(self):
