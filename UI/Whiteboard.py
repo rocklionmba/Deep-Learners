@@ -1,19 +1,21 @@
 from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QPixmap, QColor
 from PyQt5.QtCore import Qt, QPoint
-CANVAS_DIMENSIONS = 1050,580
-class Whiteboard(QtWidgets.QLabel):
 
-    def initalize(self):
+
+class Whiteboard(QtWidgets.QLabel):
+    def initalize(self, x=1050, y=581):
+        self.canx = x
+        self.cany = y
         self.background_color = QColor(Qt.white)
         self.brushSize = 9
         self.brushColor = Qt.black
         self.reset()
 
     def reset(self):
-        self.setPixmap(QPixmap(*CANVAS_DIMENSIONS))
+        self.setPixmap(QPixmap(self.canx, self.cany))
         self.pixmap().fill(self.background_color)
-        
+
     def mousePressEvent(self, event):
         self.last_pos = event.pos()
 
