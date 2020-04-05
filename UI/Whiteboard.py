@@ -4,13 +4,30 @@ from PyQt5.QtCore import Qt, QPoint
 
 
 class Whiteboard(QtWidgets.QLabel):
-    def initalize(self, x=1050, y=581):
+    def initalize(self, x=1211, y=841):
         self.canx = x
         self.cany = y
+        #self.resize(int(self.parent().width()), int(self.parent().height()))
         self.background_color = QColor(Qt.white)
         self.brushSize = 9
         self.brushColor = Qt.black
         self.reset()
+
+
+    def blueColor(self):
+        self.brushColor = Qt.blue
+
+    def blackColor(self):
+        self.brushColor = Qt.black
+
+    def redColor(self):
+        self.brushColor = Qt.red
+
+    def greenColor(self):
+        self.brushColor = Qt.green
+
+    def purpleColor(self):
+        self.brushColor = Qt.magenta
 
     def reset(self):
         self.setPixmap(QPixmap(self.canx, self.cany))

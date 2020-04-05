@@ -1,21 +1,8 @@
 import PyQt5
-'''
-from PyQt5 import uic
-from PyQt5.QtWidgets import QApplication, QWidget
-
-Form, Window = uic.loadUiType("MainWindow.ui")
-
-app = QApplication([])
-window = Window()
-form = Form()
-form.setupUi(window)
-window.show()
-app.exec_()
-'''
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
-from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap
-from PyQt5.QtCore import Qt, QPoint
+from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, QPalette
+from PyQt5.QtCore import Qt, QPoint, QSize
 import sys
 from Whiteboard import Whiteboard
 
@@ -23,6 +10,7 @@ from Whiteboard import Whiteboard
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
+
 
         #title = "Paint Application"
         #top = 0
@@ -34,7 +22,7 @@ class Window(QMainWindow):
         self.filePath = ""
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
@@ -79,7 +67,11 @@ class Window(QMainWindow):
         self.saveWhiteboard.triggered.connect(lambda: self.save())
         self.saveAsWhiteboard.triggered.connect(lambda: self.saveAs())
         self.closeWhiteboard.triggered.connect(lambda: self.setCloseWhiteboard())
-
+        self.blueButton.clicked.connect(lambda: self.mainWhiteboard.blueColor())
+        self.redButton.clicked.connect(lambda: self.mainWhiteboard.redColor())
+        self.greenButton.clicked.connect(lambda: self.mainWhiteboard.greenColor())
+        self.blackButton.clicked.connect(lambda: self.mainWhiteboard.blackColor())
+        self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
         self.setWindowTitle("Whiteboard Application - New Project")
