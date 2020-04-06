@@ -8,17 +8,13 @@ from Whiteboard import Whiteboard
 
 import random
 import datetime
+import os
+import glob
 
 
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
-
-        # title = "Paint Application"
-        # top = 0
-        # left = 75
-        # width = 1920
-        # height = 1080
 
         # icon = "icons/pain.png"
         self.filePath = ""
@@ -124,8 +120,11 @@ class Window(QMainWindow):
         self.nextButton.setEnabled(False)  # next button
         self.timeUpBox.setVisible(False)  # popup box
 
-    # def clearTmp(self):
+    def clearTmp(self):
         # delete tmp files
+        files = glob.glob('tmp/*')
+        for f in files:
+            os.remove(f)
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -209,7 +208,7 @@ class Window(QMainWindow):
         self.timerCountdown.display(self.tVal)
 
     def startMathGame(self):
-        # self.clearTmp()
+        self.clearTmp()
         self.problemArr.clear()
         self.operatorText.text()
         self.timerCountdown.display(self.tVal)
@@ -230,6 +229,9 @@ class Window(QMainWindow):
         print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
 
     def timerControl(self):
+
+        answerBank = ""
+
         self.timerCountdown.display(self.timerCountdown.intValue() - 1)
         print(self.timerCountdown.intValue())
         if self.timerCountdown.intValue() == 0:
@@ -238,8 +240,6 @@ class Window(QMainWindow):
             self.nextButton.setEnabled(False)  # disable submissions
             self.timeUpBox.setVisible(True)  # show popup box
 
-            # call getResults() function
-            answerBank = ""
             # show results onto self.scoreResults text Box
             for i in range(len(self.problemArr)):
                 print("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
@@ -249,6 +249,8 @@ class Window(QMainWindow):
                 print(answerBank)
 
             self.questionResults.setText('{d}'.format(d=answerBank))
+
+            # call getResults() function
 
     def nextProblem(self):
         path = "tmp/answer_" + str(len(self.problemArr)) + ".png"
