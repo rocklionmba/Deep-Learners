@@ -237,8 +237,8 @@ class Window(QMainWindow):
 
             # show results onto self.scoreResults text Box
             for i in range(len(self.problemArr)):
-                print("Problem", i, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
-                #self.scoreResults.setText("Problem", i, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
+                print("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
+                #self.scoreResults.setText("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
 
     def nextProblem(self):
         path = "tmp/answer_" + str(len(self.problemArr)) + ".png"
