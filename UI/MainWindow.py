@@ -63,6 +63,7 @@ class Window(QMainWindow):
         # QLabel
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
+        self.questionResults = self.findChild(QtWidgets.QLabel, 'questionResults')
 
         # QGroupBox
         self.timeUpBox = self.findChild(QtWidgets.QGroupBox, 'timeUpBox')
@@ -122,6 +123,9 @@ class Window(QMainWindow):
 
         self.nextButton.setEnabled(False)  # next button
         self.timeUpBox.setVisible(False)  # popup box
+
+    # def clearTmp(self):
+        # delete tmp files
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -205,6 +209,7 @@ class Window(QMainWindow):
         self.timerCountdown.display(self.tVal)
 
     def startMathGame(self):
+        # self.clearTmp()
         self.problemArr.clear()
         self.operatorText.text()
         self.timerCountdown.display(self.tVal)
@@ -234,11 +239,16 @@ class Window(QMainWindow):
             self.timeUpBox.setVisible(True)  # show popup box
 
             # call getResults() function
-
+            answerBank = ""
             # show results onto self.scoreResults text Box
             for i in range(len(self.problemArr)):
                 print("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
-                #self.scoreResults.setText("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
+
+                answerBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
+                    b=self.problemArr[i]) + " = " + '{c}'.format(c=eval(self.problemArr[i]))+"\n")
+                print(answerBank)
+
+            self.questionResults.setText('{d}'.format(d=answerBank))
 
     def nextProblem(self):
         path = "tmp/answer_" + str(len(self.problemArr)) + ".png"
