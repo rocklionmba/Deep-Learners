@@ -6,6 +6,9 @@ from PyQt5.QtCore import Qt, QPoint, QSize
 import sys
 from Whiteboard import Whiteboard
 
+import random
+import time
+
 
 class Window(QMainWindow):
     def __init__(self):
@@ -21,7 +24,7 @@ class Window(QMainWindow):
         self.filePath = ""
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("MainWindow.ui", self)
 
         # All findChild should go here
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
@@ -40,6 +43,10 @@ class Window(QMainWindow):
         self.clearAnswer = self.findChild(QtWidgets.QPushButton, 'clearAnswer')
         self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
+
+        self.difficultyComboBox = self.findChild(QtWidgets.QComboBox, 'difficultyComboBox')
+        self.timeComboBox = self.findChild(QtWidgets.QComboBox, 'timeComboBox')
+
         # End findChild
 
         self.mainWhiteboard.initalize()
@@ -75,6 +82,8 @@ class Window(QMainWindow):
         self.blackButton.clicked.connect(lambda: self.mainWhiteboard.blackColor())
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
         self.operatorComboBox.currentIndexChanged.connect(lambda i: self.setOperator(i))
+        self.difficultyComboBox.currentIndexChanged.connect(lambda d: self.setDifficulty(d))
+        self.timeComboBox.currentIndexChanged.connect(lambda t: self.setTime(t))    #
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -131,8 +140,38 @@ class Window(QMainWindow):
         print(i)
         if i == 0:
             self.operatorText.setText("+")
+            operator = "add"
         else:
             self.operatorText.setText("X")
+            operator = "multiply"
+        print(operator)
+
+    def setDifficulty(self, d):
+        print(d)
+        if(d == 0):
+            difficulty = "easy"
+        elif(d == 1):
+            difficulty = "medium"
+        elif(d == 2):
+            difficulty = "hard"
+        print(difficulty)
+
+    def setTime(self, t):
+        print(t)
+        if(t == 0):
+            tVal = 10  # 10 secs
+        elif(t == 1):
+            tVal = 15  # 15 secs
+        elif(t == 2):
+            tVal = 30  # 30 secs
+        elif(t == 3):
+            tVal = 45  # 45 secs
+        elif(t == 4):
+            tVal = 60  # 1 min
+        elif(t == 5):
+            tVal = 120  # 2 mins
+        print(tVal)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
