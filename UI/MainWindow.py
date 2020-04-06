@@ -10,29 +10,28 @@ import random
 import datetime
 
 
-
 class Window(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        #title = "Paint Application"
-        #top = 0
-        #left = 75
-        #width = 1920
-        #height = 1080
+        # title = "Paint Application"
+        # top = 0
+        # left = 75
+        # width = 1920
+        # height = 1080
 
-        #icon = "icons/pain.png"
+        # icon = "icons/pain.png"
         self.filePath = ""
         self.tVal = 10
         self.difficulty = 0
         self.problemArr = []
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("MainWindow.ui", self)
 
         # All findChild should go here
 
-        #QPushButton
+        # QPushButton
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
         self.mathgameMainButton = self.findChild(QtWidgets.QPushButton, 'mathgameMainButton')
         self.backButton = self.findChild(QtWidgets.QPushButton, 'backButton')
@@ -41,32 +40,36 @@ class Window(QMainWindow):
         self.startButton = self.findChild(QtWidgets.QPushButton, 'startButton')
         self.nextButton = self.findChild(QtWidgets.QPushButton, 'nextButton')
 
-        #StackedWidget
+        # StackedWidget
         self.mainStackedWidget = self.findChild(QtWidgets.QStackedWidget, 'mainStackedWidget')
-        
-        #Whiteboard
+
+        # Whiteboard
         self.mainWhiteboard = self.findChild(Whiteboard, 'mainWhiteboard')
         self.scratchPaperWhiteboard = self.findChild(Whiteboard, 'scratchPaperWhiteboard')
         self.answerBoxWhiteboard = self.findChild(Whiteboard, 'answerBoxWhiteboard')
 
-        #QAction
+        # QAction
         self.newWhiteboard = self.findChild(QtWidgets.QAction, 'actionWhiteboard')
         self.saveWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave')
         self.saveAsWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave_As')
         self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
         self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
-        
-        #QComboBox
+
+        # QComboBox
         self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
         self.difficultyComboBox = self.findChild(QtWidgets.QComboBox, 'difficultyComboBox')
         self.timeComboBox = self.findChild(QtWidgets.QComboBox, 'timeComboBox')
 
-        #QLabel
+        # QLabel
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
-        
-        
-        # End findChild
+        self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
 
+        # QGroupBox
+        self.timeUpBox = self.findChild(QtWidgets.QGroupBox, 'timeUpBox')
+
+        # QDialogButtonBox
+        self.timeUpOk = self.findChild(QtWidgets.QDialogButtonBox, 'timeUpOk')
+        # End findChild
 
         self.mainWhiteboard.initalize()
         self.mainWhiteboard.setMouseTracking(True)
@@ -83,25 +86,25 @@ class Window(QMainWindow):
         if (type(self.mainStackedWidget) == "NoneType"):
             print("none")
 
-        #home Screen actions
+        # home Screen actions
         self.whiteboardMainButton.clicked.connect(lambda: self.setNewWhiteboard())
         self.mathgameMainButton.clicked.connect(lambda: self.setNewMathgame())
 
-        #back and clear actions whiteboard and math game
+        # back and clear actions whiteboard and math game
         self.backButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
         self.backButton_3.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
         self.clearButton.clicked.connect(lambda: self.clear())
         self.clearButton_3.clicked.connect(lambda: self.clear())
         self.clearAnswer.clicked.connect(lambda: self.clearAnswerBoard())
 
-        #actions for file new, open, save, save as, close
+        # actions for file new, open, save, save as, close
         self.newWhiteboard.triggered.connect(lambda: self.setNewWhiteboard())
         self.openWhiteboard.triggered.connect(lambda: self.openExistingWhiteboard())
         self.saveWhiteboard.triggered.connect(lambda: self.save())
         self.saveAsWhiteboard.triggered.connect(lambda: self.saveAs())
         self.closeWhiteboard.triggered.connect(lambda: self.setCloseWhiteboard())
 
-        #actions for selecting pen Color
+        # actions for selecting pen Color
         self.blueButton.clicked.connect(lambda: self.mainWhiteboard.blueColor())
         self.redButton.clicked.connect(lambda: self.mainWhiteboard.redColor())
         self.greenButton.clicked.connect(lambda: self.mainWhiteboard.greenColor())
@@ -109,12 +112,16 @@ class Window(QMainWindow):
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
         self.grayButton.clicked.connect(lambda: self.mainWhiteboard.grayColor())
 
-        #actions for Math game comboxes and timer
+        # actions for Math game comboxes and timer
         self.operatorComboBox.currentIndexChanged.connect(lambda i: self.setOperator(i))
         self.difficultyComboBox.currentIndexChanged.connect(lambda d: self.setDifficulty(d))
         self.timeComboBox.currentIndexChanged.connect(lambda t: self.setTime(t))
         self.startButton.clicked.connect(lambda: self.startMathGame())
         self.nextButton.clicked.connect(lambda: self.nextProblem())
+        self.timeUpOk.clicked.connect(lambda: self.timeUpBox.setVisible(False))
+
+        self.nextButton.setEnabled(False)  # next button
+        self.timeUpBox.setVisible(False)  # popup box
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -175,12 +182,12 @@ class Window(QMainWindow):
         else:
             self.operatorText.setText("*")
             self.operator = "multiply"
-        #print(operator)
+        # print(operator)
 
     def setDifficulty(self, d):
-        #print(d)
+        # print(d)
         self.difficulty = d
-        #print(difficulty)
+        # print(difficulty)
 
     def setTime(self, t):
         if(t == 0):
@@ -207,14 +214,15 @@ class Window(QMainWindow):
         self.countdownTimer.start(1000)
 
     def createNewProblem(self):
+        self.nextButton.setDisabled(False)
         probRange = self.difficulty * 10 + 11
         a = random.randrange(probRange)
         b = random.randrange(probRange)
         self.aValue.display(a)
         self.bValue.display(b)
         self.problemArr.append('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b))
-        #print('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b))
-        #print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
+        print('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b))
+        print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
 
     def timerControl(self):
         self.timerCountdown.display(self.timerCountdown.intValue() - 1)
@@ -222,9 +230,18 @@ class Window(QMainWindow):
         if self.timerCountdown.intValue() == 0:
             self.countdownTimer.stop()
             print("done")
+            self.nextButton.setEnabled(False)  # disable submissions
+            self.timeUpBox.setVisible(True)  # show popup box
+
+            # call getResults() function
+
+            # show results onto self.scoreResults text Box
+            for i in range(len(self.problemArr)):
+                print("Problem", i, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
+                #self.scoreResults.setText("Problem", i, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
 
     def nextProblem(self):
-        path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
+        path = "tmp/answer_" + str(len(self.problemArr)) + ".png"
         pixmap = self.answerBoxWhiteboard.pixmap()
         pixmap.save(path, "PNG")
         self.clear()
