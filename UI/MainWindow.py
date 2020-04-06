@@ -2,12 +2,13 @@ import PyQt5
 from PyQt5 import uic, QtWidgets
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, QPalette
-from PyQt5.QtCore import Qt, QPoint, QSize
+from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
 
 import random
-import time
+import datetime
+
 
 
 class Window(QMainWindow):
@@ -22,30 +23,48 @@ class Window(QMainWindow):
 
         #icon = "icons/pain.png"
         self.filePath = ""
+        self.tVal = 10
+        self.difficulty = 0
+        self.problemArr = []
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
+
+        #QPushButton
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
         self.mathgameMainButton = self.findChild(QtWidgets.QPushButton, 'mathgameMainButton')
-        self.mainStackedWidget = self.findChild(QtWidgets.QStackedWidget, 'mainStackedWidget')
         self.backButton = self.findChild(QtWidgets.QPushButton, 'backButton')
         self.clearButton = self.findChild(QtWidgets.QPushButton, 'clearButton')
+        self.clearAnswer = self.findChild(QtWidgets.QPushButton, 'clearAnswer')
+        self.startButton = self.findChild(QtWidgets.QPushButton, 'startButton')
+        self.nextButton = self.findChild(QtWidgets.QPushButton, 'nextButton')
+
+        #StackedWidget
+        self.mainStackedWidget = self.findChild(QtWidgets.QStackedWidget, 'mainStackedWidget')
+        
+        #Whiteboard
         self.mainWhiteboard = self.findChild(Whiteboard, 'mainWhiteboard')
         self.scratchPaperWhiteboard = self.findChild(Whiteboard, 'scratchPaperWhiteboard')
         self.answerBoxWhiteboard = self.findChild(Whiteboard, 'answerBoxWhiteboard')
+
+        #QAction
         self.newWhiteboard = self.findChild(QtWidgets.QAction, 'actionWhiteboard')
         self.saveWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave')
         self.saveAsWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave_As')
         self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
         self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
-        self.clearAnswer = self.findChild(QtWidgets.QPushButton, 'clearAnswer')
+        
+        #QComboBox
         self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
-        self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
-
         self.difficultyComboBox = self.findChild(QtWidgets.QComboBox, 'difficultyComboBox')
         self.timeComboBox = self.findChild(QtWidgets.QComboBox, 'timeComboBox')
+
+        #QLabel
+        self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
+        
+        
 
         # End findChild
 
@@ -83,7 +102,9 @@ class Window(QMainWindow):
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
         self.operatorComboBox.currentIndexChanged.connect(lambda i: self.setOperator(i))
         self.difficultyComboBox.currentIndexChanged.connect(lambda d: self.setDifficulty(d))
-        self.timeComboBox.currentIndexChanged.connect(lambda t: self.setTime(t))    #
+        self.timeComboBox.currentIndexChanged.connect(lambda t: self.setTime(t))
+        self.startButton.clicked.connect(lambda: self.startMathGame())
+        self.nextButton.clicked.connect(lambda: self.nextProblem())
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -137,40 +158,68 @@ class Window(QMainWindow):
         self.answerBoxWhiteboard.reset()
 
     def setOperator(self, i):
-        print(i)
+        # print(i)
         if i == 0:
             self.operatorText.setText("+")
-            operator = "add"
+            self.operator = "add"
         else:
-            self.operatorText.setText("X")
-            operator = "multiply"
-        print(operator)
+            self.operatorText.setText("*")
+            self.operator = "multiply"
+        #print(operator)
 
     def setDifficulty(self, d):
-        print(d)
-        if(d == 0):
-            difficulty = "easy"
-        elif(d == 1):
-            difficulty = "medium"
-        elif(d == 2):
-            difficulty = "hard"
-        print(difficulty)
+        #print(d)
+        self.difficulty = d
+        #print(difficulty)
 
     def setTime(self, t):
-        print(t)
         if(t == 0):
-            tVal = 10  # 10 secs
+            self.tVal = 10  # 10 secs
         elif(t == 1):
-            tVal = 15  # 15 secs
+            self.tVal = 15  # 15 secs
         elif(t == 2):
-            tVal = 30  # 30 secs
+            self.tVal = 30  # 30 secs
         elif(t == 3):
-            tVal = 45  # 45 secs
+            self.tVal = 45  # 45 secs
         elif(t == 4):
-            tVal = 60  # 1 min
+            self.tVal = 60  # 1 min
         elif(t == 5):
-            tVal = 120  # 2 mins
-        print(tVal)
+            self.tVal = 120  # 2 mins
+        self.timerCountdown.display(self.tVal)
+
+    def startMathGame(self):
+        self.problemArr.clear()
+        self.operatorText.text()
+        self.timerCountdown.display(self.tVal)
+        self.countdownTimer = QTimer()
+        self.countdownTimer.timeout.connect(lambda: self.timerControl())
+        self.createNewProblem()
+        self.countdownTimer.start(1000)
+
+    def createNewProblem(self):
+        probRange = self.difficulty * 10 + 11
+        a = random.randrange(probRange)
+        b = random.randrange(probRange)
+        self.aValue.display(a)
+        self.bValue.display(b)
+        self.problemArr.append('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b))
+        #print('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b))
+        #print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
+
+    def timerControl(self):
+        self.timerCountdown.display(self.timerCountdown.intValue() - 1)
+        print(self.timerCountdown.intValue())
+        if self.timerCountdown.intValue() == 0:
+            self.countdownTimer.stop()
+            print("done")
+
+    def nextProblem(self):
+        path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
+        pixmap = self.answerBoxWhiteboard.pixmap()
+        pixmap.save(path, "PNG")
+        self.clear()
+        self.clearAnswerBoard()
+        self.createNewProblem()
 
 
 if __name__ == "__main__":
