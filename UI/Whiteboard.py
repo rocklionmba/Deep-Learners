@@ -29,6 +29,9 @@ class Whiteboard(QtWidgets.QLabel):
     def purpleColor(self):
         self.brushColor = Qt.magenta
 
+    def grayColor(self):
+        self.brushColor = Qt.gray
+
     def reset(self):
         self.setPixmap(QPixmap(self.canx, self.cany))
         self.pixmap().fill(self.background_color)

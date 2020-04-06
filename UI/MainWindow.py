@@ -65,41 +65,51 @@ class Window(QMainWindow):
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         
         
-
         # End findChild
+
 
         self.mainWhiteboard.initalize()
         self.mainWhiteboard.setMouseTracking(True)
         self.mainWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
-        self.scratchPaperWhiteboard.initalize(691, 581)
+        self.scratchPaperWhiteboard.initalize(711, 781)
         self.scratchPaperWhiteboard.setMouseTracking(True)
         self.scratchPaperWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
-        self.answerBoxWhiteboard.initalize(361, 231)
+        self.answerBoxWhiteboard.initalize(431, 431)
         self.answerBoxWhiteboard.setMouseTracking(True)
         self.answerBoxWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
         if (type(self.mainStackedWidget) == "NoneType"):
             print("none")
 
+        #home Screen actions
         self.whiteboardMainButton.clicked.connect(lambda: self.setNewWhiteboard())
         self.mathgameMainButton.clicked.connect(lambda: self.setNewMathgame())
+
+        #back and clear actions whiteboard and math game
         self.backButton.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
         self.backButton_3.clicked.connect(lambda: self.mainStackedWidget.setCurrentIndex(0))
         self.clearButton.clicked.connect(lambda: self.clear())
         self.clearButton_3.clicked.connect(lambda: self.clear())
         self.clearAnswer.clicked.connect(lambda: self.clearAnswerBoard())
+
+        #actions for file new, open, save, save as, close
         self.newWhiteboard.triggered.connect(lambda: self.setNewWhiteboard())
         self.openWhiteboard.triggered.connect(lambda: self.openExistingWhiteboard())
         self.saveWhiteboard.triggered.connect(lambda: self.save())
         self.saveAsWhiteboard.triggered.connect(lambda: self.saveAs())
         self.closeWhiteboard.triggered.connect(lambda: self.setCloseWhiteboard())
+
+        #actions for selecting pen Color
         self.blueButton.clicked.connect(lambda: self.mainWhiteboard.blueColor())
         self.redButton.clicked.connect(lambda: self.mainWhiteboard.redColor())
         self.greenButton.clicked.connect(lambda: self.mainWhiteboard.greenColor())
         self.blackButton.clicked.connect(lambda: self.mainWhiteboard.blackColor())
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
+        self.grayButton.clicked.connect(lambda: self.mainWhiteboard.grayColor())
+
+        #actions for Math game comboxes and timer
         self.operatorComboBox.currentIndexChanged.connect(lambda i: self.setOperator(i))
         self.difficultyComboBox.currentIndexChanged.connect(lambda d: self.setDifficulty(d))
         self.timeComboBox.currentIndexChanged.connect(lambda t: self.setTime(t))
