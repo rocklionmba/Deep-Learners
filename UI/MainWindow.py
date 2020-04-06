@@ -21,7 +21,7 @@ class Window(QMainWindow):
         self.filePath = ""
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
         self.whiteboardMainButton = self.findChild(QtWidgets.QPushButton, 'whiteboardMainButton')
@@ -38,7 +38,8 @@ class Window(QMainWindow):
         self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
         self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
         self.clearAnswer = self.findChild(QtWidgets.QPushButton, 'clearAnswer')
-        #self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
+        self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
+        self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         # End findChild
 
         self.mainWhiteboard.initalize()
@@ -73,6 +74,7 @@ class Window(QMainWindow):
         self.greenButton.clicked.connect(lambda: self.mainWhiteboard.greenColor())
         self.blackButton.clicked.connect(lambda: self.mainWhiteboard.blackColor())
         self.purpleButton.clicked.connect(lambda: self.mainWhiteboard.purpleColor())
+        self.operatorComboBox.currentIndexChanged.connect(lambda i: self.setOperator(i))
 
     def setNewWhiteboard(self):
         self.mainStackedWidget.setCurrentIndex(1)
@@ -109,7 +111,6 @@ class Window(QMainWindow):
     def clear(self):  # clear screen function
         self.mainWhiteboard.reset()
         self.scratchPaperWhiteboard.reset()
-        self.answerBoxWhiteboard.reset()
 
     def clearAnswerBoard(self):  # clear answer function
         self.answerBoxWhiteboard.reset()
@@ -126,14 +127,12 @@ class Window(QMainWindow):
         self.scratchPaperWhiteboard.reset()
         self.answerBoxWhiteboard.reset()
 
-
-"""
-        operator = str(operatorComboBox.currentText())
-        print(operator)
-
-    if(operator == "Addition"):
-        operatorText.
-"""
+    def setOperator(self, i):
+        print(i)
+        if i == 0:
+            self.operatorText.setText("+")
+        else:
+            self.operatorText.setText("X")
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
