@@ -72,11 +72,11 @@ class Window(QMainWindow):
         self.mainWhiteboard.setMouseTracking(True)
         self.mainWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
-        self.scratchPaperWhiteboard.initalize(711, 781)
+        self.scratchPaperWhiteboard.initalize(761, 781)
         self.scratchPaperWhiteboard.setMouseTracking(True)
         self.scratchPaperWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
-        self.answerBoxWhiteboard.initalize(431, 431)
+        self.answerBoxWhiteboard.initalize(461, 421)
         self.answerBoxWhiteboard.setMouseTracking(True)
         self.answerBoxWhiteboard.setFocusPolicy(Qt.StrongFocus)
 
