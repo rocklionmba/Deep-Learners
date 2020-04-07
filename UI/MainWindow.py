@@ -23,7 +23,7 @@ class Window(QMainWindow):
         self.problemArr = []
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
 

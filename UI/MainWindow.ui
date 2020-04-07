@@ -380,9 +380,9 @@ border: none;</string>
       <property name="geometry">
        <rect>
         <x>10</x>
-        <y>60</y>
+        <y>70</y>
         <width>711</width>
-        <height>771</height>
+        <height>761</height>
        </rect>
       </property>
       <property name="palette">
@@ -469,7 +469,7 @@ border-style: solid;</string>
       <property name="geometry">
        <rect>
         <x>20</x>
-        <y>70</y>
+        <y>90</y>
         <width>141</width>
         <height>31</height>
        </rect>
@@ -569,9 +569,9 @@ p, li { white-space: pre-wrap; }
       <property name="geometry">
        <rect>
         <x>720</x>
-        <y>60</y>
+        <y>70</y>
         <width>431</width>
-        <height>341</height>
+        <height>331</height>
        </rect>
       </property>
       <property name="frameShape">
@@ -634,11 +634,11 @@ p, li { white-space: pre-wrap; }
         <x>10</x>
         <y>0</y>
         <width>1141</width>
-        <height>61</height>
+        <height>71</height>
        </rect>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color:rgb(74, 154, 229,70%);
+       <string notr="true">background-color:rgb(74, 154, 229,65%);
 border: 2px ridge rgb(29, 156, 235);
 border-radius: 4px;
 </string>
@@ -655,7 +655,7 @@ border-radius: 4px;
          <x>100</x>
          <y>10</y>
          <width>71</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
@@ -688,7 +688,7 @@ padding:6px</string>
          <x>10</x>
          <y>10</y>
          <width>71</width>
-         <height>41</height>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
@@ -718,10 +718,10 @@ padding:6px</string>
       <widget class="QPushButton" name="startButton">
        <property name="geometry">
         <rect>
-         <x>770</x>
+         <x>760</x>
          <y>10</y>
-         <width>141</width>
-         <height>41</height>
+         <width>151</width>
+         <height>51</height>
         </rect>
        </property>
        <property name="font">
@@ -749,13 +749,337 @@ padding:6px</string>
         <string>Start</string>
        </property>
       </widget>
+      <widget class="QWidget" name="widget_2" native="true">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>10</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #e3e3e3;
+border: 1px solid black;
+border-radius: 1px</string>
+       </property>
+       <widget class="QComboBox" name="operatorComboBox">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>151</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Rockwell</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:black;
+border: 2px outset rgb(68, 68, 68); </string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>Addition</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>Multiplication</string>
+         </property>
+        </item>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="widget_3" native="true">
+       <property name="geometry">
+        <rect>
+         <x>590</x>
+         <y>10</y>
+         <width>151</width>
+         <height>51</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: #e3e3e3;
+border: 1px solid black;
+border-radius: 1px</string>
+       </property>
+       <widget class="QComboBox" name="timeComboBox">
+        <property name="geometry">
+         <rect>
+          <x>0</x>
+          <y>0</y>
+          <width>151</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <family>Rockwell</family>
+          <pointsize>12</pointsize>
+          <weight>75</weight>
+          <italic>false</italic>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color:black;
+border: 2px outset rgb(68, 68, 68); </string>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <item>
+         <property name="text">
+          <string>10 seconds</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>15 seconds</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>30 seconds</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>45 seconds</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>1 minute</string>
+         </property>
+        </item>
+        <item>
+         <property name="text">
+          <string>2 minutes</string>
+         </property>
+        </item>
+       </widget>
+      </widget>
+      <widget class="QLCDNumber" name="timerCountdown">
+       <property name="geometry">
+        <rect>
+         <x>930</x>
+         <y>0</y>
+         <width>181</width>
+         <height>71</height>
+        </rect>
+       </property>
+       <property name="palette">
+        <palette>
+         <active>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </active>
+         <inactive>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </inactive>
+         <disabled>
+          <colorrole role="WindowText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Button">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Text">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="ButtonText">
+           <brush brushstyle="SolidPattern">
+            <color alpha="255">
+             <red>255</red>
+             <green>0</green>
+             <blue>0</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Base">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+          <colorrole role="Window">
+           <brush brushstyle="SolidPattern">
+            <color alpha="204">
+             <red>244</red>
+             <green>244</green>
+             <blue>244</blue>
+            </color>
+           </brush>
+          </colorrole>
+         </disabled>
+        </palette>
+       </property>
+       <property name="font">
+        <font>
+         <family>Rockwell Extra Bold</family>
+         <pointsize>9</pointsize>
+         <weight>75</weight>
+         <italic>false</italic>
+         <bold>true</bold>
+        </font>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(244, 244, 244,80%);
+border-style:  ridge;
+border-width: 4px;
+border-color:rgb(107, 107, 107);
+color: dark red;
+font: bold;</string>
+       </property>
+       <property name="intValue" stdset="0">
+        <number>0</number>
+       </property>
+      </widget>
       <widget class="QWidget" name="widget" native="true">
        <property name="geometry">
         <rect>
-         <x>250</x>
+         <x>230</x>
          <y>10</y>
-         <width>151</width>
-         <height>41</height>
+         <width>161</width>
+         <height>51</height>
         </rect>
        </property>
        <property name="palette">
@@ -859,8 +1183,8 @@ border-radius: 1px</string>
          <rect>
           <x>0</x>
           <y>0</y>
-          <width>151</width>
-          <height>41</height>
+          <width>161</width>
+          <height>51</height>
          </rect>
         </property>
         <property name="palette">
@@ -1092,7 +1416,7 @@ border-radius: 1px</string>
         <property name="font">
          <font>
           <family>Rockwell</family>
-          <pointsize>10</pointsize>
+          <pointsize>12</pointsize>
           <weight>75</weight>
           <italic>false</italic>
           <bold>true</bold>
@@ -1105,7 +1429,8 @@ border-radius: 1px</string>
          <bool>false</bool>
         </property>
         <property name="styleSheet">
-         <string notr="true">color:black;</string>
+         <string notr="true">color:black;
+border: 2px outset rgb(68, 68, 68); </string>
         </property>
         <property name="editable">
          <bool>false</bool>
@@ -1126,328 +1451,6 @@ border-radius: 1px</string>
          </property>
         </item>
        </widget>
-      </widget>
-      <widget class="QWidget" name="widget_2" native="true">
-       <property name="geometry">
-        <rect>
-         <x>420</x>
-         <y>10</y>
-         <width>151</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: #e3e3e3;
-border: 1px solid black;
-border-radius: 1px</string>
-       </property>
-       <widget class="QComboBox" name="operatorComboBox">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>151</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Rockwell</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>Addition</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>Multiplication</string>
-         </property>
-        </item>
-       </widget>
-      </widget>
-      <widget class="QWidget" name="widget_3" native="true">
-       <property name="geometry">
-        <rect>
-         <x>590</x>
-         <y>10</y>
-         <width>131</width>
-         <height>41</height>
-        </rect>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: #e3e3e3;
-border: 1px solid black;
-border-radius: 1px</string>
-       </property>
-       <widget class="QComboBox" name="timeComboBox">
-        <property name="geometry">
-         <rect>
-          <x>0</x>
-          <y>0</y>
-          <width>131</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <family>Rockwell</family>
-          <pointsize>10</pointsize>
-          <weight>75</weight>
-          <italic>false</italic>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <item>
-         <property name="text">
-          <string>10 seconds</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>15 seconds</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>30 seconds</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>45 seconds</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>1 minute</string>
-         </property>
-        </item>
-        <item>
-         <property name="text">
-          <string>2 minutes</string>
-         </property>
-        </item>
-       </widget>
-      </widget>
-      <widget class="QLCDNumber" name="timerCountdown">
-       <property name="geometry">
-        <rect>
-         <x>950</x>
-         <y>10</y>
-         <width>111</width>
-         <height>51</height>
-        </rect>
-       </property>
-       <property name="palette">
-        <palette>
-         <active>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Window">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </active>
-         <inactive>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Window">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </inactive>
-         <disabled>
-          <colorrole role="WindowText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Button">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Text">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="ButtonText">
-           <brush brushstyle="SolidPattern">
-            <color alpha="255">
-             <red>255</red>
-             <green>0</green>
-             <blue>0</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Base">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-          <colorrole role="Window">
-           <brush brushstyle="SolidPattern">
-            <color alpha="204">
-             <red>244</red>
-             <green>244</green>
-             <blue>244</blue>
-            </color>
-           </brush>
-          </colorrole>
-         </disabled>
-        </palette>
-       </property>
-       <property name="font">
-        <font>
-         <family>Rockwell Extra Bold</family>
-         <pointsize>9</pointsize>
-         <weight>75</weight>
-         <italic>false</italic>
-         <bold>true</bold>
-        </font>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">background-color: rgb(244, 244, 244,80%);
-border-style:  ridge;
-border-width: 4px;
-border-color:rgb(107, 107, 107);
-color: dark red;
-font: bold;</string>
-       </property>
-       <property name="intValue" stdset="0">
-        <number>0</number>
-       </property>
       </widget>
      </widget>
      <widget class="QGroupBox" name="timeUpBox">
