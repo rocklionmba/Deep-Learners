@@ -1,5 +1,5 @@
 import PyQt5
-from PyQt5 import uic, QtWidgets
+from PyQt5 import uic, QtWidgets, QtNetwork
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, QPalette
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
@@ -10,6 +10,7 @@ import random
 import datetime
 import os
 import glob
+import uuid
 
 
 class Window(QMainWindow):
@@ -21,9 +22,10 @@ class Window(QMainWindow):
         self.tVal = 10
         self.difficulty = 0
         self.problemArr = []
+        self.resultsUUID = 0
         self.setWindowTitle("Whiteboard Application")
 
-        ui = uic.loadUi("MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
 
@@ -253,12 +255,49 @@ class Window(QMainWindow):
             # call getResults() function
 
     def nextProblem(self):
-        path = "tmp/answer_" + str(len(self.problemArr)) + ".png"
+        path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
         pixmap = self.answerBoxWhiteboard.pixmap()
         pixmap.save(path, "PNG")
         self.clear()
         self.clearAnswerBoard()
         self.createNewProblem()
+
+    def getResults(self):
+        self.resultsUUID = uuid.uuid4()
+        url = PyQt5.QtCore.QUrl('http://localhost:3000/qwertytest1');
+        data = { "uuid": self.resultsUUID }
+        files = {}
+        for filename in os.listdir('UI/tmp'):
+            file = PyQt5.QtCore.QFile(filename)
+            file.open(PyQt5.QtCore.QFile.ReadOnly)
+            files[filename[:-4]] = file
+        multipart = construct_multipart(data, files)
+        request = QtNetwork.QNetworkRequest(url)
+        request.setHeader(QtNetwork.QNetworkRequest.ContentTypeHeader,'multipart/form-data; boundary=%s' % multipart.boundary())
+        manager = QtNetwork.QNetworkAccessManager()
+        manager.finished.connect(lambda reply: self.response(reply))
+        submit = manager.post(request, multipart)
+
+    def construct_multipart(self, data, files):
+        multiPart = QtNetwork.QHttpMultiPart(QtNetwork.QHttpMultiPart.FormDataType)
+        for key, value in data.items():
+            textPart = QtNetwork.QHttpPart()
+            textPart.setHeader(QtNetwork.QNetworkRequest.ContentDispositionHeader,"form-data; name=\"%s\"" % key)
+            textPart.setBody(value)
+            multiPart.append(textPart)
+
+        for key, file in files.items():
+            imagePart = QtNetwork.QHttpPart()
+            #imagePart.setHeader(QNetworkRequest::ContentTypeHeader, ...);
+            fileName = PyQt5.QtCore.QFileInfo(file.fileName()).fileName()
+            imagePart.setHeader(QtNetwork.QNetworkRequest.ContentDispositionHeader,"form-data; name=\"%s\"; filename=\"%s\"" % (key, fileName))
+            imagePart.setBodyDevice(file);
+            multiPart.append(imagePart)
+        return multiPart
+
+    def response(self, reply):
+        pass
+
 
 
 if __name__ == "__main__":
