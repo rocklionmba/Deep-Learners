@@ -62,6 +62,7 @@ class Window(QMainWindow):
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.questionResults = self.findChild(QtWidgets.QLabel, 'questionResults')
+        self.promptLabel = self.findChild(QtWidgets.QLabel, 'promptLabel')
 
         # QGroupBox
         self.timeUpBox = self.findChild(QtWidgets.QGroupBox, 'timeUpBox')
@@ -217,10 +218,12 @@ class Window(QMainWindow):
         self.countdownTimer = QTimer()
         self.countdownTimer.timeout.connect(lambda: self.timerControl())
         self.createNewProblem()
+        self.promptLabel.setText("Question 1:")
         self.countdownTimer.start(1000)
 
     def createNewProblem(self):
         self.nextButton.setDisabled(False)
+        self.promptLabel.setText("Question " + str(len(self.problemArr)+1) + ":")
         probRange = self.difficulty * 10 + 11
         a = random.randrange(probRange)
         b = random.randrange(probRange)
