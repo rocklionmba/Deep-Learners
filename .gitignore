@@ -1,1 +1,4 @@
 .vscode/*
+UI/__pycache__/*
+.idea/*
+UI/tmp/*
