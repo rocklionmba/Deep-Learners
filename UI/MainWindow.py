@@ -25,6 +25,7 @@ class Window(QMainWindow):
         self.resultsUUID = 0
         self.setWindowTitle("Whiteboard Application")
 
+        self.setWindowIcon(QIcon('UI/Images/Sun.png'))
         ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
@@ -177,6 +178,7 @@ class Window(QMainWindow):
     def setNewMathgame(self):
         self.mainStackedWidget.setCurrentIndex(2)
         self.setWindowTitle("Whiteboard Application - Math Game")
+        self.promptLabel.setText("Question ")
         self.scratchPaperWhiteboard.reset()
         self.answerBoxWhiteboard.reset()
 
