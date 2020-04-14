@@ -5,6 +5,8 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, 
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
+sys.path.append('../')
+import Machine_Learning as ml
 
 import random
 import datetime
@@ -63,6 +65,7 @@ class Window(QMainWindow):
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.questionResults = self.findChild(QtWidgets.QLabel, 'questionResults')
+        self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.promptLabel = self.findChild(QtWidgets.QLabel, 'promptLabel')
 
         # QGroupBox
@@ -238,6 +241,8 @@ class Window(QMainWindow):
     def timerControl(self):
 
         answerBank = ""
+        responseBank = ""
+        mlResponse = []
 
         self.timerCountdown.display(self.timerCountdown.intValue() - 1)
         print(self.timerCountdown.intValue())
@@ -257,7 +262,14 @@ class Window(QMainWindow):
 
             self.questionResults.setText('{d}'.format(d=answerBank))
 
-            # call getResults() function
+            for file in os.listdir('tmp'):
+                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
+
+            for i in range(len(self.problemArr)):
+                responseBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
+                    b=self.problemArr[i]) + " = " + '{c}'.format(c=mlResponse[i])+"\n")
+            
+            self.questionResults.setText('{d}'.format(d=responseBank))
 
     def nextProblem(self):
         path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
