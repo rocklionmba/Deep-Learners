@@ -36,7 +36,7 @@
      <bool>false</bool>
     </property>
     <property name="currentIndex">
-     <number>2</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="home_page">
      <property name="minimumSize">
@@ -1690,6 +1690,7 @@ border-radius: 5px;</string>
     <addaction name="actionSave"/>
     <addaction name="actionSave_As"/>
     <addaction name="actionClose"/>
+    <addaction name="actionExport_Whiteboard_as_png"/>
    </widget>
    <addaction name="fileOptions"/>
   </widget>
@@ -1724,6 +1725,11 @@ border-radius: 5px;</string>
   <action name="actionMath_Game">
    <property name="text">
     <string>Math Game</string>
+   </property>
+  </action>
+  <action name="actionExport_Whiteboard_as_png">
+   <property name="text">
+    <string>Export Whiteboard (.png)</string>
    </property>
   </action>
  </widget>

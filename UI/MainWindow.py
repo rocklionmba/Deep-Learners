@@ -5,8 +5,8 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, 
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
-sys.path.append('../')
-import Machine_Learning as ml
+sys.path.append('../Machine_Learning')
+import Machine_Learning.Machine_Learning as ml
 
 import random
 import datetime
@@ -55,6 +55,7 @@ class Window(QMainWindow):
         self.saveAsWhiteboard = self.findChild(QtWidgets.QAction, 'actionSave_As')
         self.closeWhiteboard = self.findChild(QtWidgets.QAction, 'actionClose')
         self.openWhiteboard = self.findChild(QtWidgets.QAction, 'actionOpen')
+        self.exportWhiteboard = self.findChild(QtWidgets.QAction, 'actionExport_Whiteboard_as_png')
 
         # QComboBox
         self.operatorComboBox = self.findChild(QtWidgets.QComboBox, 'operatorComboBox')
@@ -107,6 +108,7 @@ class Window(QMainWindow):
         self.saveWhiteboard.triggered.connect(lambda: self.save())
         self.saveAsWhiteboard.triggered.connect(lambda: self.saveAs())
         self.closeWhiteboard.triggered.connect(lambda: self.setCloseWhiteboard())
+        self.exportWhiteboard.triggered.connect(lambda: self.export())
 
         # actions for selecting pen Color
         self.blueButton.clicked.connect(lambda: self.mainWhiteboard.blueColor())
@@ -163,6 +165,13 @@ class Window(QMainWindow):
 
         pixmap = self.mainWhiteboard.pixmap()
         self.setWindowTitle("Whiteboard Application - " + self.filePath)
+        pixmap.save(self.filePath, "PNG")
+
+    def export(self):  # export file function
+        self.filePath, _ = QFileDialog.getSaveFileName(
+            self, "Save Photo", "", "PNG file (*.png)")
+
+        pixmap = self.mainWhiteboard.pixmap()
         pixmap.save(self.filePath, "PNG")
 
     def clear(self):  # clear screen function
@@ -243,6 +252,7 @@ class Window(QMainWindow):
         answerBank = ""
         responseBank = ""
         mlResponse = []
+        dir_path = os.path.dirname(os.path.realpath(__file__))
 
         self.timerCountdown.display(self.timerCountdown.intValue() - 1)
         print(self.timerCountdown.intValue())
@@ -263,7 +273,8 @@ class Window(QMainWindow):
             self.questionResults.setText('{d}'.format(d=answerBank))
 
             for file in os.listdir('tmp'):
-                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
+                full_path = os.path.abspath(os.path.join(dir_path, file))
+                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(full_path))))
 
             for i in range(len(self.problemArr)):
                 responseBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
