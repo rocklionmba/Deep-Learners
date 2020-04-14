@@ -64,7 +64,6 @@ class Window(QMainWindow):
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.questionResults = self.findChild(QtWidgets.QLabel, 'questionResults')
-        self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.promptLabel = self.findChild(QtWidgets.QLabel, 'promptLabel')
 
         # QGroupBox
@@ -265,11 +264,11 @@ class Window(QMainWindow):
                 print(file)
                 mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
 
-            for i in range(len(self.problemArr)):
+            for i in range(len(mlResponse)):
                 responseBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
                     b=self.problemArr[i]) + " = " + '{c}'.format(c=mlResponse[i])+"\n")
             
-            self.questionResults.setText('{d}'.format(d=responseBank))
+            self.scoreResults.setText('{d}'.format(d=responseBank))
 
     def nextProblem(self):
         path = (r"Machine_Learning/imgs/answer_")+ str(len(self.problemArr)) + ".png"
