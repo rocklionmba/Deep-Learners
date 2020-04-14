@@ -5,9 +5,8 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, 
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
-sys.path.append('../')
+sys.path.append('/Machine_Learning')
 import Machine_Learning as ml
-
 import random
 import datetime
 import os
@@ -239,7 +238,7 @@ class Window(QMainWindow):
         print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
 
     def timerControl(self):
-
+        dir_path = os.path.dirname(os.path.realpath(__file__))
         answerBank = ""
         responseBank = ""
         mlResponse = []
@@ -262,7 +261,8 @@ class Window(QMainWindow):
 
             self.questionResults.setText('{d}'.format(d=answerBank))
 
-            for file in os.listdir('tmp'):
+            for file in os.listdir('Machine_Learning/imgs'):
+                print(file)
                 mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
 
             for i in range(len(self.problemArr)):
@@ -272,7 +272,7 @@ class Window(QMainWindow):
             self.questionResults.setText('{d}'.format(d=responseBank))
 
     def nextProblem(self):
-        path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
+        path = (r"Machine_Learning/imgs/answer_")+ str(len(self.problemArr)) + ".png"
         pixmap = self.answerBoxWhiteboard.pixmap()
         pixmap.save(path, "PNG")
         self.clear()
