@@ -19,7 +19,7 @@ def detector(image_loc):
       
     # 3. Load images
     DEFAULT_IMAGE_FOLDER = os.path.join(yolo.PROJECT_ROOT, "imgs")
-
+    
     img_files = [os.path.join(DEFAULT_IMAGE_FOLDER, image_loc)]
     imgs = []
     for fname in img_files:
@@ -32,15 +32,16 @@ def detector(image_loc):
     # 4. Predict digit region
     THRESHOLD = 0.3
     for img in imgs:
-        boxes, probs = yolo_detector.predict(img, THRESHOLD)
-        
+        boxes, probs = yolo_detector.predict(img, THRESHOLD)   
     return probs
 
 def first_nonzero(arr, axis, invalid_val=-1):
     mask = arr!=0
     return np.where(mask.any(axis=axis), mask.argmax(axis=axis), invalid_val)
-
+    
 def get_number(prob_buffer):
+    if (len(prob_buffer)==0):
+        return str(-1)
     output_vector = first_nonzero(prob_buffer,axis=1,invalid_val=-1)
     output = ""
     
@@ -49,12 +50,15 @@ def get_number(prob_buffer):
     return output
 
 def check_if_correct(answer_value, detect):
+    if(detect=='-1'):
+        return -1
+    
     answer_len = len(answer_value)
     detection_len = len(detect)
     tracker = answer_len
     av_array = []
     detect_array = []
-
+    
     for i in answer_value:
         av_array.append(int(i))
 

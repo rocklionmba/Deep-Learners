@@ -5,7 +5,8 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, 
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
-
+sys.path.append('Machine_Learning')
+import Machine_Learning as ml
 import random
 import datetime
 import os
@@ -26,7 +27,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Whiteboard Application")
 
         self.setWindowIcon(QIcon('UI/Images/Sun.png'))
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("MainWindow.ui", self)
 
         # All findChild should go here
 
