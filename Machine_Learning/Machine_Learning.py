@@ -18,7 +18,7 @@ def detector(image_loc):
     yolo_detector.load_weights(DEFAULT_WEIGHT_FILE)
       
     # 3. Load images
-    DEFAULT_IMAGE_FOLDER = os.path.join(yolo.PROJECT_ROOT, "imgs")
+    DEFAULT_IMAGE_FOLDER = "../Machine_Learning/imgs"#os.path.join(yolo.PROJECT_ROOT, "imgs")""
 
     img_files = [os.path.join(DEFAULT_IMAGE_FOLDER, image_loc)]
     imgs = []
@@ -72,3 +72,5 @@ def check_if_correct(answer_value, detect):
                 return int(answer_value)
         tracker += 1
     return int(detect)
+
+#print("This is answer(19):",check_if_correct("19",get_number(detector("answer_1.png"))))

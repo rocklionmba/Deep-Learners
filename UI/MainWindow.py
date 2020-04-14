@@ -5,7 +5,7 @@ from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, 
 from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
 import sys
 from Whiteboard import Whiteboard
-sys.path.append('/Machine_Learning')
+sys.path.append('../Machine_Learning')
 import Machine_Learning as ml
 import random
 import datetime
@@ -27,7 +27,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Whiteboard Application")
 
         self.setWindowIcon(QIcon('UI/Images/Sun.png'))
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("../UI/MainWindow.ui", self)
 
         # All findChild should go here
 
@@ -260,7 +260,7 @@ class Window(QMainWindow):
 
             self.questionResults.setText('{d}'.format(d=answerBank))
 
-            for file in os.listdir('Machine_Learning/imgs'):
+            for file in os.listdir('../Machine_Learning/imgs'):
                 print(file)
                 mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
 
@@ -271,7 +271,7 @@ class Window(QMainWindow):
             self.scoreResults.setText('{d}'.format(d=responseBank))
 
     def nextProblem(self):
-        path = (r"Machine_Learning/imgs/answer_")+ str(len(self.problemArr)) + ".png"
+        path = (r"../Machine_Learning/imgs/answer_")+ str(len(self.problemArr)) + ".png"
         pixmap = self.answerBoxWhiteboard.pixmap()
         pixmap.save(path, "PNG")
         self.clear()
