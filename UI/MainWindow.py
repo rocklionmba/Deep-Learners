@@ -272,9 +272,8 @@ class Window(QMainWindow):
 
             self.questionResults.setText('{d}'.format(d=answerBank))
 
-            for file in os.listdir('tmp'):
-                full_path = os.path.abspath(os.path.join(dir_path, file))
-                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(full_path))))
+            for file in os.listdir('Machine_Learning/imgs'):
+                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
 
             for i in range(len(self.problemArr)):
                 responseBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
@@ -283,7 +282,7 @@ class Window(QMainWindow):
             self.questionResults.setText('{d}'.format(d=responseBank))
 
     def nextProblem(self):
-        path = "UI/tmp/answer_" + str(len(self.problemArr)) + ".png"
+        path = "Machine_Learning/imgs/answer_" + str(len(self.problemArr)) + ".png"
         pixmap = self.answerBoxWhiteboard.pixmap()
         pixmap.save(path, "PNG")
         self.clear()
