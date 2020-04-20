@@ -18,9 +18,10 @@ def detector(image_loc):
     yolo_detector.load_weights(DEFAULT_WEIGHT_FILE)
       
     # 3. Load images
-    DEFAULT_IMAGE_FOLDER = os.path.join(yolo.PROJECT_ROOT, "imgs")
+    DEFAULT_IMAGE_FOLDER = "Machine_Learning\\imgs"
 
     img_files = [os.path.join(DEFAULT_IMAGE_FOLDER, image_loc)]
+    print(img_files)
     imgs = []
     for fname in img_files:
         img = cv2.imread(fname)

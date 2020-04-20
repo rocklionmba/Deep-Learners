@@ -2,3 +2,9 @@
 UI/__pycache__/*
 .idea/*
 UI/tmp/*
+Machine_Learning/weights.h5
+Machine_Learning/__pycache__/*
+Machine_Learning/imgs/*
+Machine_Learning/yolo/__pycache__/*
+Machine_Learning/yolo/backend/__pycache__/*
+Machine_Learning/yolo/backend/utils/__pycache__/*

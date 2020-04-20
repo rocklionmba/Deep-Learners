@@ -1,4 +1,3 @@
-
 import numpy as np
 # from .utils.box import BoundBox
 from yolo.backend.utils.box import BoundBox, nms_boxes, boxes_to_array

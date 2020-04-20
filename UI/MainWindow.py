@@ -2,12 +2,12 @@ import PyQt5
 from PyQt5 import uic, QtWidgets, QtNetwork
 from PyQt5.QtWidgets import QMainWindow, QApplication, QMenu, QMenuBar, QAction, QFileDialog, QVBoxLayout
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QBrush, QColor, QPixmap, QPalette
-from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer
+from PyQt5.QtCore import Qt, QPoint, QSize, QThread, QTimer, QThread
 import sys
 from Whiteboard import Whiteboard
+from MachineLearningProcessor import MachineLearningProcessor
 sys.path.append('../Machine_Learning')
-import Machine_Learning.Machine_Learning as ml
-
+import Machine_Learning as ml   
 import random
 import datetime
 import os
@@ -129,6 +129,15 @@ class Window(QMainWindow):
         self.nextButton.setEnabled(False)  # next button
         self.timeUpBox.setVisible(False)  # popup box
 
+        self.mlthread = QThread()
+        self.processor = MachineLearningProcessor()
+        self.processor.moveToThread(self.mlthread)
+
+        self.processor.dataReady.connect(lambda response: self.finishProcessing(response))
+        self.processor.finished.connect(self.mlthread.quit)
+        self.mlthread.started.connect(lambda imgs=os.listdir('Machine_Learning/imgs'), answers = self.problemArr: self.processor.processImgs(imgs,answers))
+
+
     def clearTmp(self):
         # delete tmp files
         files = glob.glob('tmp/*')
@@ -248,7 +257,6 @@ class Window(QMainWindow):
         print(eval('{a} '.format(a=a) + self.operatorText.text() + ' {b}'.format(b=b)))
 
     def timerControl(self):
-
         answerBank = ""
         responseBank = ""
         mlResponse = []
@@ -272,14 +280,7 @@ class Window(QMainWindow):
 
             self.questionResults.setText('{d}'.format(d=answerBank))
 
-            for file in os.listdir('Machine_Learning/imgs'):
-                mlResponse.append(ml.check_if_correct("19",ml.get_number(ml.detector(file))))
-
-            for i in range(len(self.problemArr)):
-                responseBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
-                    b=self.problemArr[i]) + " = " + '{c}'.format(c=mlResponse[i])+"\n")
-            
-            self.questionResults.setText('{d}'.format(d=responseBank))
+            self.mlthread.start()
 
     def nextProblem(self):
         path = "Machine_Learning/imgs/answer_" + str(len(self.problemArr)) + ".png"
@@ -325,6 +326,9 @@ class Window(QMainWindow):
     def response(self, reply):
         pass
 
+    def finishProcessing(self, responceBank):
+        self.questionResults.setText('{d}'.format(d=responceBank))
+
 
 
 if __name__ == "__main__":
@@ -332,3 +336,4 @@ if __name__ == "__main__":
     window = Window()
     window.show()
     app.exec()
+    app.deleteLater()   
