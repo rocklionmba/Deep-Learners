@@ -28,7 +28,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Whiteboard Application")
 
         self.setWindowIcon(QIcon('UI/Images/Sun.png'))
-        ui = uic.loadUi("UI/MainWindow.ui", self)
+        ui = uic.loadUi("../UI/MainWindow.ui", self)
 
         # All findChild should go here
 
