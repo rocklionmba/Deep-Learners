@@ -9,8 +9,8 @@ class Whiteboard(QtWidgets.QLabel):
         self.cany = y
         #self.resize(int(self.parent().width()), int(self.parent().height()))
         self.background_color = QColor(Qt.white)
-        self.brushSize = 9
-        self.brushColor = Qt.black
+        self.brushSize = 25
+        self.brushColor = Qt.blue
         self.reset()
 
 

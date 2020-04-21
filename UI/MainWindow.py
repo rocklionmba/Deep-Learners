@@ -66,7 +66,6 @@ class Window(QMainWindow):
         self.operatorText = self.findChild(QtWidgets.QLabel, 'operatorText')
         self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.questionResults = self.findChild(QtWidgets.QLabel, 'questionResults')
-        self.scoreResults = self.findChild(QtWidgets.QLabel, 'scoreResults')
         self.promptLabel = self.findChild(QtWidgets.QLabel, 'promptLabel')
 
         # QGroupBox
@@ -327,7 +326,7 @@ class Window(QMainWindow):
         pass
 
     def finishProcessing(self, responceBank):
-        self.questionResults.setText('{d}'.format(d=responceBank))
+        self.scoreResults.setText('{d}'.format(d=responceBank))
 
 
 

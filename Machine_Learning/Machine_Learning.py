@@ -40,8 +40,9 @@ def detector(image_loc):
 def first_nonzero(arr, axis, invalid_val=-1):
     mask = arr!=0
     return np.where(mask.any(axis=axis), mask.argmax(axis=axis), invalid_val)
-
 def get_number(prob_buffer):
+    if (len(prob_buffer)==0):
+        return str(-1)
     output_vector = first_nonzero(prob_buffer,axis=1,invalid_val=-1)
     output = ""
     
@@ -50,12 +51,15 @@ def get_number(prob_buffer):
     return output
 
 def check_if_correct(answer_value, detect):
+    if(detect=='-1'):
+        return -1
+    
     answer_len = len(answer_value)
     detection_len = len(detect)
     tracker = answer_len
     av_array = []
     detect_array = []
-
+    
     for i in answer_value:
         av_array.append(int(i))
 
@@ -68,4 +72,6 @@ def check_if_correct(answer_value, detect):
             if values == tuple(av_array):
                 return int(answer_value)
         tracker += 1
-    return int(detect) 
+    return int(detect)
+
+#print("This is answer(19):",check_if_correct("19",get_number(detector("answer_1.png"))))

@@ -13,11 +13,12 @@ class MachineLearningProcessor(QtCore.QObject):
         responseBank = ""
         i = 0
         for file in imgs:
-            mlResponse.append(ml.check_if_correct(eval(answers[i]),ml.get_number(ml.detector(file))))
+            print(eval(answers[i]))
+            mlResponse.append(ml.check_if_correct(str(eval(answers[i])),ml.get_number(ml.detector(file))))
             i += 1
 
-        for j in range(len(self.problemArr)):
+        for j in range(len(answers)-1):
                 responseBank += ("Problem " + '{a}'.format(a=j+1) + ": " + '{b}'.format(
-                    b=self.problemArr[j]) + " = " + '{c}'.format(c=mlResponse[j])+"\n")
+                    b=answers[j]) + " = " + '{c}'.format(c=mlResponse[j])+"\n")
         self.dataReady.emit(responseBank)
         self.finished.emit()
