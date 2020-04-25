@@ -1,4 +1,4 @@
-import PyQt5,sys
+import PyQt5,sys,os
 from PyQt5 import QtCore,QtGui
 sys.path.append('../Machine_Learning')
 import Machine_Learning as ml
@@ -12,6 +12,8 @@ class MachineLearningProcessor(QtCore.QObject):
         mlResponse = []
         responseBank = ""
         i = 0
+        imgs=os.listdir('Machine_Learning/imgs')
+        print(answers)
         for file in imgs:
             print(eval(answers[i]))
             mlResponse.append(ml.check_if_correct(str(eval(answers[i])),ml.get_number(ml.detector(file))))

@@ -28,7 +28,7 @@ class Window(QMainWindow):
         self.setWindowTitle("Whiteboard Application")
 
         self.setWindowIcon(QIcon('UI/Images/Sun.png'))
-        ui = uic.loadUi("../UI/MainWindow.ui", self)
+        ui = uic.loadUi("UI/MainWindow.ui", self)
 
         # All findChild should go here
 
@@ -139,7 +139,7 @@ class Window(QMainWindow):
 
     def clearTmp(self):
         # delete tmp files
-        files = glob.glob('tmp/*')
+        files = glob.glob('Machine_Learning/imgs/*')
         for f in files:
             os.remove(f)
 
@@ -201,6 +201,7 @@ class Window(QMainWindow):
         self.promptLabel.setText("Question ")
         self.scratchPaperWhiteboard.reset()
         self.answerBoxWhiteboard.reset()
+        self.scoreResults.setText("Loading...")
 
     def setOperator(self, i):
         # print(i)
@@ -270,7 +271,7 @@ class Window(QMainWindow):
             self.timeUpBox.setVisible(True)  # show popup box
 
             # show results onto self.scoreResults text Box
-            for i in range(len(self.problemArr)):
+            for i in range(len(self.problemArr)-1):
                 print("Problem", i+1, ": ", self.problemArr[i], "=", eval(self.problemArr[i]), "\n")
 
                 answerBank += ("Problem " + '{a}'.format(a=i+1) + ": " + '{b}'.format(
